@@ -1,2 +1,5 @@
 # Ignore input data
 *.csv
+
+# Ignore output plots for now
+*.pdf

@@ -1,2 +1,5 @@
 # Wind data is stored as CSV, x column contains wind speeds
-wind_data = read.csv("wind.csv")
+wind_data = read.csv("wind.csv")[["x"]]
+
+# Histogram to summarise data
+hist(wind_data)
