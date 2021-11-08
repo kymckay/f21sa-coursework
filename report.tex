@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[11pt]{article}
 \usepackage[margin=2cm]{geometry}
 
 % for links
@@ -56,5 +56,48 @@
     \caption{Histogram of Arthur's Seat wind speeds}
     \label{fig:histogram}
 \end{figure}
+
+\section*{Part 2}
+
+Considering the likelihood function,
+
+\begin{align*}
+    L(\sigma) &= \prod_{i=1}^n{ \frac{x_i}{\sigma^2} \exp\left( \frac{-x_i^2}{2 \sigma^2} \right)} \\
+    &= \frac{1}{\sigma^{2n}} \times \prod_{i=1}^n{ x_i \exp\left( \frac{-x_i^2}{2 \sigma^2} \right)} \text{,}
+\end{align*}
+
+the log likelihood function is found to simplify calculations (since the function minimums occur at the same $\sigma$),
+
+\begin{align*}
+    l(\sigma) &= \log\left(\frac{1}{\sigma^{2n}}\right) + \sum_{i=1}^n{ \log(x_i) - \frac{x_i}{2 \sigma^2} } \\
+    &= -2n \log(\sigma) + \sum_{i=1}^n{\log(x_i)} - \frac{1}{2 \sigma^2} \sum_{i=1}^n{x_i^2} \text{.}
+\end{align*}
+
+The score function is needed, which is the first derivative of log likelihood,
+
+\begin{align*}
+    U(\sigma) = \frac{\partial l}{\partial \sigma} = \frac{-2n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^n{x_i^2} \text{.}
+\end{align*}
+
+The maximum likelihood estimator (denoted by $ \hat\sigma $) is found by equating the score function to 0 to find where likelihood is minimised.
+
+$$
+    \frac{-2n}{\hat{\sigma}} + \frac{1}{\hat{\sigma}^3} \sum_{i=1}^n{x_i^2} = 0
+$$
+
+multiplying both sides by $ \hat{\sigma}^3 $
+
+$$
+-2n \hat\sigma^2 + \sum_{i=1}^n{x_i^2} = 0
+$$
+
+solving for $ \hat\sigma $
+
+$$
+\hat\sigma = \sqrt{\frac{\sum_{i=1}^n{x_i^2}}{2n}} \text{.}
+$$
+
+
+For the wind data this is calculated in R to be 10.40396 mph.
 
 \end{document}
