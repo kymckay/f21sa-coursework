@@ -108,8 +108,10 @@ The Fisher information is found as
 I(\sigma) &= - E\left[ \frac{\partial^2 l}{\partial \sigma^2}(\sigma)\right] \\
 &= - E\left[ \frac{2n}{\sigma^2} - \frac{3}{\sigma^4} \sum_{i=1}^n {x_i^2} \right] \\
 &= - \frac{2n}{\sigma^2} + \frac{3}{\sigma^4} \sum_{i=1}^n {E(x_i^2)} \\
-&= - \frac{2n}{\sigma^2} + \frac{6n}{\sigma^2}
+&= - \frac{2n}{\sigma^2} + \frac{6n}{\sigma^2} \\
+&= \frac{4n}{\sigma^2}
 \end{align*}
 
+For large $ n $, $ \hat\sigma $ is approximately distributed as $ N(\sigma, \frac{1}{I(\sigma)}) $. In this case that is $ N(\sigma, \frac{\sigma^2}{4n}) $.
 
 \end{document}
