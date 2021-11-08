@@ -1,5 +1,24 @@
 # Ignore input data
 *.csv
 
+# Latex output and auxiliary files
+*.pdf
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+
 # Ignore output plots for now
 *.pdf
