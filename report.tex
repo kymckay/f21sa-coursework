@@ -105,6 +105,18 @@ For large $ n $, $ \hat\sigma $ is approximately distributed as $ N(\sigma, \fra
 
 For the wind data $ \hat\sigma $ is calculated in R (see Appendix) to be 10.40396 mph.
 
+To obtain a 95\% equal-tailed confidence interval,
+
+\begin{align*}
+    I_{0.95} = \hat\sigma &\pm \left(z_{0.025} \times ese(\hat\sigma)\right)
+    \intertext{where}
+    ese(\hat\sigma) &= \sqrt{1/I(\hat\sigma)} = \sqrt{\hat\sigma^2/4n} \text{,}
+\end{align*}
+
+calculation is performed in R (with $z_{0.025} = 1.96$ taken from NCST Table 5) to obtain the result
+
+$$ I_{0.95} = [ 10.08153 , 10.72638 ] \text{.}$$
+
 \newpage
 \section*{Appendix}
 \subsection*{R Code}
