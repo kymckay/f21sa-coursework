@@ -22,3 +22,6 @@
 
 # Ignore output plots for now
 *.pdf
+
+# Ignore spellcheck output
+*.bak
