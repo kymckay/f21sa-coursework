@@ -1,3 +1,6 @@
+# Part 5 requires VGAM package, `anaconda install r-vgam`
+library(VGAM)
+
 # Wind data is stored as CSV, x column contains wind speeds
 wind_data = read.csv("wind.csv")[["x"]]
 
@@ -26,3 +29,6 @@ z025 = 1.96
 # 95% confidence interval for sigma_hat
 I095 = c(sigma_hat - z025 * ese, sigma_hat + z025 * ese)
 cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n")
+
+# Part 5, random samples of the assumed Rayleigh distribution
+X_prime = rrayleigh(1000, scale = sigma_hat)
