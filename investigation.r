@@ -35,9 +35,10 @@ cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n\n")
 
 # Find the sample mean may times to produce a distribution
 Y_prime = rep(0, 10000) # Preallocate for efficiency
+n = 1000 # Sample size
 for (i in 1:10000) {
     # Part 5, random samples of the assumed Rayleigh distribution
-    X_prime = rrayleigh(1000, scale = sigma_hat)
+    X_prime = rrayleigh(n, scale = sigma_hat)
 
     Y_prime[i] = mean(X_prime)
 }
@@ -51,5 +52,19 @@ dev.off()
 cat("\nPredicted Mean Summary Statistics\n")
 cat("Mean:", mean(Y_prime), "mph\n")
 cat("Standard deviation:", sd(Y_prime), "mph\n")
+cat("Variance:", var(Y_prime), "mph\n")
 cat("Median:", median(Y_prime), "mph\n")
-cat("Quantiles:", quantile(Y_prime), "(all mph)\n")
+cat("Quantiles:", quantile(Y_prime), "(all mph)\n\n")
+
+# CLT allows finding the population SD as follows
+sigma = sqrt(var(Y_prime) * n)
+cat("Sigma:", sigma, "\n")
+
+# Pivotal value which follows chi-squared distribution
+# Value when S = sd(x)
+pv = (n - 1) * var(wind_data) / sigma^2
+cat("Pivotal value:", pv, "\n")
+
+# Desired probability that S > sd(x), so tail
+prob = pchisq(pv, df = n-1, lower.tail = FALSE)
+cat("Probability that S > sd(x):", prob, "\n\n")
