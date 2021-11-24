@@ -11,11 +11,11 @@ hist(wind_data, main=NULL, xlab="Daily average wind speed (mph)")
 dev.off()
 
 # Summary statistics
-cat("Wind Speed Summary Statistics\n")
+cat("\nWind Speed Summary Statistics\n")
 cat("Mean:", mean(wind_data), "mph\n")
 cat("Standard deviation:", sd(wind_data), "mph\n")
 cat("Median:", median(wind_data), "mph\n")
-cat("Quantiles:", quantile(wind_data), "(all mph)\n")
+cat("Quantiles:", quantile(wind_data), "(all mph)\n\n")
 
 # MLE
 # Derivated in report
@@ -31,7 +31,7 @@ z025 = 1.96
 
 # 95% confidence interval for sigma_hat
 I095 = c(sigma_hat - z025 * ese, sigma_hat + z025 * ese)
-cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n")
+cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n\n")
 
 # Find the sample mean may times to produce a distribution
 Y_prime = rep(0, 10000) # Preallocate for efficiency
@@ -47,3 +47,9 @@ par(mar=c(4,4,1,1)+0.1)
 hist(Y_prime, main=NULL,
 xlab="Predicted mean wind speed in next 1000 days (mph)")
 dev.off()
+
+cat("\nPredicted Mean Summary Statistics\n")
+cat("Mean:", mean(Y_prime), "mph\n")
+cat("Standard deviation:", sd(Y_prime), "mph\n")
+cat("Median:", median(Y_prime), "mph\n")
+cat("Quantiles:", quantile(Y_prime), "(all mph)\n")
