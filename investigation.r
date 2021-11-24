@@ -30,5 +30,15 @@ z025 = 1.96
 I095 = c(sigma_hat - z025 * ese, sigma_hat + z025 * ese)
 cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n")
 
-# Part 5, random samples of the assumed Rayleigh distribution
-X_prime = rrayleigh(1000, scale = sigma_hat)
+# Find the sample mean may times to produce a distribution
+Y_prime = rep(0, 10000) # Preallocate for efficiency
+for (i in 1:10000) {
+    # Part 5, random samples of the assumed Rayleigh distribution
+    X_prime = rrayleigh(1000, scale = sigma_hat)
+
+    Y_prime[i] = mean(X_prime)
+}
+
+pdf("PredictionMean.pdf", width=6, height=3)
+hist(Y_prime, xlab="Predicted Mean Wind Speed in next 1000 days (mph)")
+dev.off()
