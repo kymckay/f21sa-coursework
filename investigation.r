@@ -5,7 +5,10 @@ library(VGAM)
 wind_data = read.csv("wind.csv")[["x"]]
 
 # Histogram to summarise data
-hist(wind_data)
+pdf("DailyMean.pdf", width=6, height=4)
+par(mar=c(4,4,1,1)+0.1)
+hist(wind_data, main=NULL, xlab="Daily average wind speed (mph)")
+dev.off()
 
 # Summary statistics
 cat("Wind Speed Summary Statistics\n")
@@ -39,6 +42,8 @@ for (i in 1:10000) {
     Y_prime[i] = mean(X_prime)
 }
 
-pdf("PredictionMean.pdf", width=6, height=3)
-hist(Y_prime, xlab="Predicted Mean Wind Speed in next 1000 days (mph)")
+pdf("PredictionMean.pdf", width=6, height=4)
+par(mar=c(4,4,1,1)+0.1)
+hist(Y_prime, main=NULL,
+xlab="Predicted mean wind speed in next 1000 days (mph)")
 dev.off()
