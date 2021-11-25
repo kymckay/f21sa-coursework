@@ -91,64 +91,45 @@ which means the wind data has a positive skew, but overall is not very dispersed
 since the standard deviation is only $\sim17\%$ of the range.
 
 \section{Scale Parameter Estimation}
-
-Considering the likelihood function of the Rayleigh model,
-
-$$
+\begin{align*}
+\intertext{Considering the likelihood function of the Rayleigh model,}
     L(\sigma) = \prod_{i=1}^n{ \frac{x_i}{\sigma^2} \exp\left( \frac{-x_i^2}{2 \sigma^2} \right)}
     = \frac{1}{\sigma^{2n}} \times \prod_{i=1}^n{ x_i \exp\left( \frac{-x_i^2}{2 \sigma^2} \right)} \text{,}
-$$
-
-the log likelihood function is used to simplify calculations (since the function minimums occur at the same $\sigma$),
-
-$$
+\intertext{the log likelihood function is used to simplify calculations (since minimums occur at the same $\sigma$),}
     l(\sigma) = \log\left(\frac{1}{\sigma^{2n}}\right) + \sum_{i=1}^n{ \log(x_i) - \frac{x_i}{2 \sigma^2} }
     = -2n \log(\sigma) + \sum_{i=1}^n{\log(x_i)} - \frac{1}{2 \sigma^2} \sum_{i=1}^n{x_i^2} \text{.}
-$$
-
-The score function is needed, which is the first derivative of log likelihood,
-
-$$
+\intertext{The score function is needed, which is the first derivative of log likelihood,}
     U(\sigma) = \frac{\partial l}{\partial \sigma} = \frac{-2n}{\sigma} + \frac{1}{\sigma^3} \sum_{i=1}^n{x_i^2} \text{.}
-$$
-
-The maximum likelihood estimator (denoted by $ \hat\sigma $) is found by equating the score function to 0 to find where likelihood is minimised
-by solving for $ \hat\sigma $.
-
-\begin{align*}
-    \frac{-2n}{\hat{\sigma}} + \frac{1}{\hat{\sigma}^3} \sum_{i=1}^n{x_i^2} &= 0 \\
-    -2n \hat\sigma^2 + \sum_{i=1}^n{x_i^2} &= 0 \\
+\intertext{The maximum likelihood estimator (denoted by $ \hat\sigma $) is found by equating the score function to 0 to find where likelihood is minimised
+by solving for $ \hat\sigma $.}
+    \frac{-2n}{\hat{\sigma}} + \frac{1}{\hat{\sigma}^3} \sum_{i=1}^n{x_i^2} = 0 \rightarrow -2n \hat\sigma^2 + \sum_{i=1}^n{x_i^2} = 0 \\
     \hat\sigma = \sqrt{\frac{\sum_{i=1}^n{x_i^2}}{2n}} \text{.}
 \end{align*}
 
 \subsection{Estimator Distribution}
 
 The Fisher information is found as
-
 \begin{align*}
 I(\sigma) &= - E\left[ \frac{\partial^2 l}{\partial \sigma^2}(\sigma)\right]
 = - E\left[ \frac{2n}{\sigma^2} - \frac{3}{\sigma^4} \sum_{i=1}^n {x_i^2} \right] \\
 &= - \frac{2n}{\sigma^2} + \frac{3}{\sigma^4} \sum_{i=1}^n {E(x_i^2)}
 = - \frac{2n}{\sigma^2} + \frac{6n}{\sigma^2} = \frac{4n}{\sigma^2}
 \end{align*}
-
 For large $ n $, $ \hat\sigma $ is approximately distributed as $ N(\sigma, \frac{1}{I(\sigma)}) $. In this case that is $ N(\sigma, \frac{\sigma^2}{4n}) $.
 
 \subsection{Estimator Confidence}
 
-For the wind data $ \hat\sigma $ is calculated in R (see Appendix) to be 10.40396 mph.
+For the wind data $ \hat\sigma = 10.40396 \text{ mph}$ is calculated in R (see Appendix).
 
-To obtain a 95\% equal-tailed confidence interval,
-
+A 95\% equal-tailed confidence interval is
 \begin{align*}
-    I_{0.95} = \hat\sigma &\pm \left(z_{0.025} \times ese(\hat\sigma)\right)
-    \intertext{where}
-    ese(\hat\sigma) &= \sqrt{1/I(\hat\sigma)} = \sqrt{\hat\sigma^2/4n} \text{,}
+    I_{0.95} = \hat\sigma &\pm \left(z_{0.025} \times ese(\hat\sigma)\right) \\
+\intertext{where}
+    ese(\hat\sigma) &= \sqrt{1/I(\hat\sigma)} = \sqrt{\hat\sigma^2/4n} = \sqrt{10.40396^2 / 4000} \approx 0.165 \text{ mph.}
 \end{align*}
-
-calculation is performed in R (with $z_{0.025} = 1.96$ taken from NCST Table 5) to obtain the result
-
-$$ I_{0.95} = [ 10.08153 , 10.72638 ] \text{.}$$
+With $z_{0.025} = 1.96$ taken from NCST Table 5, the confidence interval is
+% TODO reference NCST
+$$ I_{0.95} = [\sigma_L(\underline{x}), \sigma_U(\underline{x})] \approx [ 10.081 , 10.727 ] \text{.}$$
 
 \section{Future Wind Speed Simulation}
 
@@ -182,25 +163,31 @@ per the central limit theorem.
 \subsection{Increasing Wind Speed Probability}
 
 From the central limit theorem, the population standard deviation is
-
 \begin{align*}
     \sigma = \sqrt{Var(Y^\prime) \times n} = \sqrt{0.216^2 \times 1000} \approx 6.831 \text{,}
-\intertext{which is used to find a pivotal value for the point of interest (when $S = sd(\underline{x})$)}
-    \frac{(n-1)sd(\underline{x})^2}{\sigma^2} \sim \chi_{n-1}^2
+\intertext{which is used to find a pivotal value for the point of interest (when $S = sd(\underline{x}) = 6.997$)}
+    \frac{(n-1)S^2}{\sigma^2} \sim \chi_{n-1}^2 \rightarrow \frac{999\times 6.997^2}{6.831^2} \approx 1048.14 \text{.}
 \end{align*}
-
-In R (see Appendix) this is found to be approximately 1043.5 and used with the chi-squared cumulative distribution function to obtain
-
+In R (see Appendix), the pivotal value is found to higher precision and used with the chi-squared cumulative distribution function to obtain
 $$ P[S > sd(\underline{x})] = 0.1597 $$
+Suggesting the hypothesis that wind speed variance will increase in the coming years is 15.97\% likely.
 
 \subsection{Conclusion Robustness}
 
-Repeating the same simulation and calculations as above for the lower and upper estimates, $\sigma_L(\underline{x})$ and $\sigma_U(\underline{x})$ respectively, gives
-
+Repeating the same simulation and calculations as above for the lower and upper confidence interval estimates, $\sigma_L(\underline{x})$ and $\sigma_U(\underline{x})$ respectively, gives
 \begin{align*}
     P[S > sd(\underline{x})]_L &= 0.0038 \\
     P[S > sd(\underline{x})]_U &= 0.6974
 \end{align*}
+
+The probabilities range so highly that the suggested likelihood
+of wind speed variance increasing is not found to be robust to errors in
+the estimation of $\sigma$. It is observed that the hypothesis could be
+described as both likely (above 50\% probable) and extremely unlikely
+(below 0.5\% probable) both within the 95\% confidence interval --
+meaning a very accurate estimation of $\sigma$ would be needed to
+truly assess whether wind speed variance will increase in coming
+years.
 
 \newpage
 \section*{Appendix}
