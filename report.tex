@@ -127,8 +127,7 @@ A 95\% equal-tailed confidence interval is
 \intertext{where}
     ese(\hat\sigma) &= \sqrt{1/I(\hat\sigma)} = \sqrt{\hat\sigma^2/4n} = \sqrt{10.40396^2 / 4000} \approx 0.165 \text{ mph.}
 \end{align*}
-With $z_{0.025} = 1.96$ taken from NCST Table 5, the confidence interval is
-% TODO reference NCST
+With $z_{0.025} = 1.96$ taken from NCST Table 5 \cite{NCST}, the confidence interval is
 $$ I_{0.95} = [\sigma_L(\underline{x}), \sigma_U(\underline{x})] \approx [ 10.081 , 10.727 ] \text{.}$$
 
 \section{Future Wind Speed Simulation}
@@ -188,6 +187,10 @@ described as both likely (above 50\% probable) and extremely unlikely
 meaning a very accurate estimation of $\sigma$ would be needed to
 truly assess whether wind speed variance will increase in coming
 years.
+
+\begin{thebibliography}{1}
+    \bibitem{NCST} Lindley, D. and Scott, W., 1995. New Cambridge Statistical Tables. 2nd ed. New York: Cambridge University Press.
+\end{thebibliography}
 
 \newpage
 \section*{Appendix}
