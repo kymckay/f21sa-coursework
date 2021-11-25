@@ -48,16 +48,49 @@
     \Large{F21SA Assessed Project}
 \end{center}
 
-\section*{Part 1}
+\section{Introduction}
+
+Average wind speeds, $\underline{x}$, at the top of Arthur's Seat on 1000
+days between 2018-2020 are analysed to produce a Rayleigh statistical
+model in order to make predictions of future wind speeds.
+
+Maximum likelihood estimation of the distribution's scale parameter,
+$\sigma$, is used to fit the model to the data so that simulation of
+future wind speeds can be performed. The probability of predicted future
+wind speeds having a greater scale parameter than the measured data is
+then used to determine if the predictive model is robust to errors in
+the estimation of $\sigma$.
+
+% TODO conclusions
+
+\section{Data Inspection}
 
 \begin{figure}[ht]
     \centering
 	\includegraphics[clip]{DailyMean.pdf}
-    \caption{Histogram of 1000 average daily Arthur's Seat wind speeds}
+    \caption{Histogram of 1000 daily average wind speeds on Arthur's Seat}
     \label{fig:histogram}
 \end{figure}
 
-\section*{Part 2}
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ll}
+    Statistic & Value \\ \hline
+    Mean, $\underline{\bar x}$ & 12.945 mph \\
+    Median & 12.145 mph \\
+    Standard deviation, $sd(\underline{x})$ & 6.997 mph \\
+    5-quantiles & [0.13, 7.615, 12.145, 16.96, 41.87] mph
+    \end{tabular}
+    \caption{Summary statistics of daily average wind speeds on Arthur's Seat}
+    \label{t:data}
+\end{table}
+
+The mean is found to be greater than the median (see Table \ref{t:data})
+which means the wind data has a positive skew, but overall is not very dispersed
+since the standard deviation is only $\sim17\%$ of the range.
+
+\section{Scale Parameter Estimation}
 
 Considering the likelihood function,
 
