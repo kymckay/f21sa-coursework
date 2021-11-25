@@ -92,7 +92,7 @@ since the standard deviation is only $\sim17\%$ of the range.
 
 \section{Scale Parameter Estimation}
 
-Considering the likelihood function,
+Considering the likelihood function of the Rayleigh model,
 
 $$
     L(\sigma) = \prod_{i=1}^n{ \frac{x_i}{\sigma^2} \exp\left( \frac{-x_i^2}{2 \sigma^2} \right)}
@@ -121,7 +121,7 @@ by solving for $ \hat\sigma $.
     \hat\sigma = \sqrt{\frac{\sum_{i=1}^n{x_i^2}}{2n}} \text{.}
 \end{align*}
 
-\section*{Part 3}
+\subsection{Estimator Distribution}
 
 The Fisher information is found as
 
@@ -134,7 +134,7 @@ I(\sigma) &= - E\left[ \frac{\partial^2 l}{\partial \sigma^2}(\sigma)\right]
 
 For large $ n $, $ \hat\sigma $ is approximately distributed as $ N(\sigma, \frac{1}{I(\sigma)}) $. In this case that is $ N(\sigma, \frac{\sigma^2}{4n}) $.
 
-\section*{Part 4}
+\subsection{Estimator Confidence}
 
 For the wind data $ \hat\sigma $ is calculated in R (see Appendix) to be 10.40396 mph.
 
@@ -150,7 +150,7 @@ calculation is performed in R (with $z_{0.025} = 1.96$ taken from NCST Table 5) 
 
 $$ I_{0.95} = [ 10.08153 , 10.72638 ] \text{.}$$
 
-\section*{Part 5}
+\section{Future Wind Speed Simulation}
 
 \begin{figure}[ht]
     \centering
@@ -159,25 +159,41 @@ $$ I_{0.95} = [ 10.08153 , 10.72638 ] \text{.}$$
     \label{fig:mean_hist}
 \end{figure}
 
-It seems from simulation in R (see Figure \ref{fig:mean_hist}) that the predicted mean
-wind speed in the next 1000 days has approximate distribution $Y^\prime \sim N(13.04, 0.047)$.
-A normal distribution is as expected in accordance with the central limit theorem.
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ll}
+    Statistic & Value \\ \hline
+    Mean, $\bar Y^\prime$ \rule{0pt}{3ex} & 13.041 mph \\
+    Median & 13.041 mph \\
+    Standard deviation, $sd(Y^\prime)$ & 0.216 mph \\
+    5-quantiles & [12.21, 12.89, 13.04, 13.18, 13.91] mph
+    \end{tabular}
+    \caption{Summary statistics of 10,000 predicted mean wind speeds in next 1000 days}
+    \label{t:mean}
+\end{table}
 
-\section*{Part 6}
+It seems from simulation in R (see Figure \ref{fig:mean_hist}) that the predicted mean
+wind speed in the next 1000 days has an approximate Normal distribution.
+This is corroborated by the equivalent mean and medians in Table
+\ref{t:mean} -- the entries of which suggest that
+$Y^\prime \sim N(13.041, 0.216^2)$. A normal distribution is expected as
+per the central limit theorem.
+
+\subsection{Increasing Wind Speed Probability}
 
 From the central limit theorem, the population standard deviation is
 
 \begin{align*}
-    \sigma = \sqrt{Var(Y^\prime) \times n} = \sqrt{0.047 \times 1000} \approx 6.846 \text{,}
+    \sigma = \sqrt{Var(Y^\prime) \times n} = \sqrt{0.216^2 \times 1000} \approx 6.831 \text{,}
 \intertext{which is used to find a pivotal value for the point of interest (when $S = sd(\underline{x})$)}
     \frac{(n-1)sd(\underline{x})^2}{\sigma^2} \sim \chi_{n-1}^2
 \end{align*}
 
-In R (see Appendix) this is found to be approximately 1043.5 and plugged into the chi-squared cumulative distribution function to obtain
+In R (see Appendix) this is found to be approximately 1043.5 and used with the chi-squared cumulative distribution function to obtain
 
 $$ P[S > sd(\underline{x})] = 0.1597 $$
 
-\section*{Part 7}
+\subsection{Conclusion Robustness}
 
 Repeating the same simulation and calculations as above for the lower and upper estimates, $\sigma_L(\underline{x})$ and $\sigma_U(\underline{x})$ respectively, gives
 
