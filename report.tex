@@ -56,12 +56,14 @@ model in order to make predictions of future wind speeds.
 
 Maximum likelihood estimation of the distribution's scale parameter,
 $\sigma$, is used to fit the model to the data so that simulation of
-future wind speeds can be performed. The probability of predicted future
-wind speeds having a greater scale parameter than the measured data is
-then used to determine if the predictive model is robust to errors in
-the estimation of $\sigma$.
+future wind speeds can be performed. The probability of wind speed variance
+increasing in the coming years is determined and the result checked for
+robustness.
 
-% TODO conclusions
+It is found that the predictive model is not robust to errors in the
+estimation of $\sigma$ and so no concrete conclusion can be made on
+whether wind speed variance will increase in the next 10,000 years
+without a significantly larger sample of wind data to reduce prediction error.
 
 \section{Data Inspection}
 
