@@ -1,6 +1,3 @@
-# Part 5 requires VGAM package, `anaconda install r-vgam`
-library(VGAM)
-
 # Wind data is stored as CSV, x column contains wind speeds
 wind_data = read.csv("wind.csv")[["x"]]
 
@@ -8,7 +5,7 @@ wind_data = read.csv("wind.csv")[["x"]]
 pdf("DailyMean.pdf", width=6, height=4)
 par(mar=c(4,4,1,1)+0.1)
 hist(wind_data, main=NULL, xlab="Daily average wind speed (mph)")
-dev.off()
+suppress <- dev.off()
 
 # Summary statistics
 cat("\nWind Speed Summary Statistics\n")
@@ -19,7 +16,6 @@ cat("Quantiles:", quantile(wind_data), "(all mph)\n\n")
 
 # MLE
 # Derivated in report
-
 sigma_hat = sqrt(sum(wind_data ^ 2) / (2 * length(wind_data)))
 cat("MLE:", sigma_hat, "mph\n")
 
@@ -33,21 +29,21 @@ z025 = 1.96
 I095 = c(sigma_hat - z025 * ese, sigma_hat + z025 * ese)
 cat("Confidence Interval: [", I095[1], ",", I095[2], "] mph\n\n")
 
-# Find the sample mean may times to produce a distribution
-Y_prime = rep(0, 10000) # Preallocate for efficiency
-n = 1000 # Sample size
-for (i in 1:10000) {
-    # Part 5, random samples of the assumed Rayleigh distribution
-    X_prime = rrayleigh(n, scale = sigma_hat)
+# Define functions used for parts 5, 6, 7
+source("simulate.r")
+source("probability.r")
 
-    Y_prime[i] = mean(X_prime)
-}
+# This ensures random simulations are consistent between runs
+set.seed(21)
+
+sample_size = 1000 # Given by problem
+Y_prime = simulate(sigma_hat, sample_size)
 
 pdf("PredictionMean.pdf", width=6, height=4)
 par(mar=c(4,4,1,1)+0.1)
 hist(Y_prime, main=NULL,
 xlab="Predicted mean wind speed in next 1000 days (mph)")
-dev.off()
+suppress <- dev.off()
 
 cat("\nPredicted Mean Summary Statistics\n")
 cat("Mean:", mean(Y_prime), "mph\n")
@@ -56,15 +52,15 @@ cat("Variance:", var(Y_prime), "mph\n")
 cat("Median:", median(Y_prime), "mph\n")
 cat("Quantiles:", quantile(Y_prime), "(all mph)\n\n")
 
-# CLT allows finding the population SD as follows
-sigma = sqrt(var(Y_prime) * n)
-cat("Sigma:", sigma, "\n")
+cat("For MLE\n")
+prob = prob_S_from_means(sd(wind_data), sample_size, Y_prime)
 
-# Pivotal value which follows chi-squared distribution
-# Value when S = sd(x)
-pv = (n - 1) * var(wind_data) / sigma^2
-cat("Pivotal value:", pv, "\n")
+# Recalculate with lower estimate
+cat("For lower estimate\n")
+Y_prime = simulate(I095[1], sample_size)
+prob = prob_S_from_means(sd(wind_data), sample_size, Y_prime)
 
-# Desired probability that S > sd(x), so tail
-prob = pchisq(pv, df = n-1, lower.tail = FALSE)
-cat("Probability that S > sd(x):", prob, "\n\n")
+# Recalculate with lower estimate
+cat("For upper estimate\n")
+Y_prime = simulate(I095[2], sample_size)
+prob = prob_S_from_means(sd(wind_data), sample_size, Y_prime)

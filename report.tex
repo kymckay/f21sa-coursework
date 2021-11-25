@@ -127,7 +127,7 @@ $$ I_{0.95} = [ 10.08153 , 10.72638 ] \text{.}$$
 \end{figure}
 
 It seems from simulation in R (see Figure \ref{fig:mean_hist}) that the predicted mean
-wind speed in the next 1000 days has approximate distribution $Y^\prime \sim N(13.04, 0.046)$.
+wind speed in the next 1000 days has approximate distribution $Y^\prime \sim N(13.04, 0.047)$.
 A normal distribution is as expected in accordance with the central limit theorem.
 
 \section*{Part 6}
@@ -135,18 +135,33 @@ A normal distribution is as expected in accordance with the central limit theore
 From the central limit theorem, the population standard deviation is
 
 \begin{align*}
-    \sigma = \sqrt{Var(Y^\prime) \times n} = \sqrt{0.046 \times 1000} \approx 6.775 \text{,}
-\intertext{which is used to find a pivotal value for the probability of interest (when $S = sd(\underline{x})$)}
+    \sigma = \sqrt{Var(Y^\prime) \times n} = \sqrt{0.047 \times 1000} \approx 6.846 \text{,}
+\intertext{which is used to find a pivotal value for the point of interest (when $S = sd(\underline{x})$)}
     \frac{(n-1)sd(\underline{x})^2}{\sigma^2} \sim \chi_{n-1}^2
 \end{align*}
 
-In R (see Appendix) this is found to be approximately 1065.6 and plugged into the chi-squared cumulative distribution function to obtain
+In R (see Appendix) this is found to be approximately 1043.5 and plugged into the chi-squared cumulative distribution function to obtain
 
-$$ P[S > sd(\underline{x})] = 0.0703 $$
+$$ P[S > sd(\underline{x})] = 0.1597 $$
+
+\section*{Part 7}
+
+Repeating the same simulation and calculations as above for the lower and upper estimates, $\sigma_L(\underline{x})$ and $\sigma_U(\underline{x})$ respectively, gives
+
+\begin{align*}
+    P[S > sd(\underline{x})]_L &= 0.0038 \\
+    P[S > sd(\underline{x})]_U &= 0.6974
+\end{align*}
 
 \newpage
 \section*{Appendix}
-\subsection*{R Code}
+\subsection*{investigation.r}
 \lstinputlisting[language=R]{investigation.r}
+
+\subsection*{simulate.r}
+\lstinputlisting[language=R]{simulate.r}
+
+\subsection*{probability.r}
+\lstinputlisting[language=R]{probability.r}
 
 \end{document}
