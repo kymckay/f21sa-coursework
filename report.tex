@@ -121,7 +121,7 @@ For large $ n $, $ \hat\sigma $ is approximately distributed as $ N(\sigma, \fra
 
 \subsection{Estimator Confidence}
 
-For the wind data $ \hat\sigma = 10.40396 \text{ mph}$ is calculated in R (see Appendix).
+For the wind data, $ \hat\sigma = 10.40396 \text{ mph}$ is calculated in R (see Appendix).
 
 A 95\% equal-tailed confidence interval is
 \begin{align*}
@@ -158,7 +158,7 @@ It seems from simulation in R (see Figure \ref{fig:mean_hist}) that the predicte
 wind speed in the next 1000 days has an approximate Normal distribution.
 This is corroborated by the equivalent mean and medians in Table
 \ref{t:mean} -- the entries of which suggest that
-$Y^\prime \sim N(13.041, 0.216^2)$. A normal distribution is expected as
+$Y^\prime \sim N(13.041, 0.216^2)$. A normal distribution is as expected
 per the central limit theorem.
 
 \subsection{Increasing Wind Speed Probability}
@@ -171,7 +171,7 @@ From the central limit theorem, the population standard deviation is
 \end{align*}
 In R (see Appendix), the pivotal value is found to higher precision and used with the chi-squared cumulative distribution function to obtain
 $$ P[S > sd(\underline{x})] = 0.1597 $$
-Suggesting the hypothesis that wind speed variance will increase in the coming years is 15.97\% likely.
+Suggesting the hypothesis that wind speed variance will increase in the coming years is 15.97\% probable.
 
 \subsection{Conclusion Robustness}
 
